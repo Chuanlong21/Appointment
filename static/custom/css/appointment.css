@@ -1,0 +1,64 @@
+#calendar {
+    flex-grow: 1; /* Make the calendar take up the remaining space */
+}
+
+.form-container {
+    margin-bottom: 20px; /* Add margin between form and calendar */
+}
+
+.legend {
+    margin-bottom: 20px; /* Space between legend and calendar */
+    display: flex;
+    flex-direction: row; /* Horizontal layout */
+    justify-content: center; /* Center the legend horizontally */
+    gap: 20px; /* Space between legend items */
+}
+
+.legend div {
+    display: flex;
+    align-items: center;
+}
+
+.legend span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; /* Make circles */
+    margin-right: 5px;
+}
+
+.legend .today {
+    background-color: #FFFFE0; /* Light yellow */
+}
+
+.legend .closed {
+    background-color: #d3d3d3; /* Light gray */
+}
+
+.submit-align-right {
+     text-align: right;
+}
+
+.calendar-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+
+@media (max-width: 768px) {
+    .submit-align-right {
+        text-align: center;
+    }
+
+    .form-container form {
+        justify-content: center;
+    }
+
+    .calendar-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+}

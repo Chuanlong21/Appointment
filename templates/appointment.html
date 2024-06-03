@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='custom/css/appointment.css') }}" rel="stylesheet">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet'/>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
+
+
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Welcome to ___!</h1>
+    <div class="form-container">
+        <form id="appointment-form" class="row g-3 needs-validation" novalidate>
+            <div class="col-md-4">
+                <label for="validationCustom01" class="form-label">First name</label>
+                <input type="text" class="form-control" id="validationCustom01" name="firstName" value="Mark" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom02" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="validationCustom02" name="lastName" value="Otto" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="exampleFormControlInput1" class="form-label">Email</label>
+                <input type="email" class="form-control" id="validationCustom03" name="email" placeholder="name@example.com"
+                       required>
+            </div>
+            <div class="col-md-3">
+                <label for="exampleFormControlInput1" class="form-label">Phone</label>
+                <input type="email" class="form-control" id="validationCustom04" name="phone" placeholder="000-000-0000" required>
+            </div>
+            <div class="col-md-3">
+                <label for="validationDefault04" class="form-label">Start Time</label>
+                <select class="form-select" id="validationDefault05" name="startTime" required>
+                    <option selected disabled value="">Choose...</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="validationDefault04" class="form-label">Program</label>
+                <select class="form-select" id="validationDefault06" name="program" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option value="Foot,45">Foot 45 mins</option>
+                    <option value="Head,45">Head 45 mins</option>
+                    <option value="Body,45">Body 45 mins</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label for="validationDefault04" class="form-label">Employee</label>
+                <select class="form-select" id="validationDefault07" name="employee" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option>Miki</option>
+                    <option>Kyle</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="exampleFormControlTextarea1" class="form-label">Notes</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="notes" rows="3"></textarea>
+            </div>
+
+            <div class="col-12 submit-align-right">
+                <button id="submit-button" class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="legend">
+        <div><span class="today"></span>Today</div>
+        <div><span class="closed"></span>Closed</div>
+    </div>
+
+    <div class="calendar-controls">
+        <div id='calendar'></div>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='custom/js/calendar.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='custom/js/appointment.js') }}"></script>
+</body>
+</html>
