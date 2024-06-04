@@ -27,3 +27,6 @@ class User(BaseModel):
 
     def update_end_time(self, end_time: str):
         self.endTime = end_time
+
+    def update_program(self, program: str):
+        self.program = program

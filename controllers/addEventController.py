@@ -1,7 +1,7 @@
 # controllers/appointment_controller.py
 from models.user import User
 from datetime import datetime, timedelta
-from services.excel_service import init_excel_file,add_to_excel
+from services.csv_service import init_csv_file, add_to_csv
 
 
 def add(user_data) -> {}:
@@ -10,8 +10,9 @@ def add(user_data) -> {}:
 
     new_user = User(**user_data)
     new_user.update_end_time(end_time)
-    # init_excel_file()
-    # add_to_excel(new_user)
+    new_user.update_program(program[0])
+    init_csv_file()
+    add_to_csv(new_user)
     print(new_user)
 
     return {
