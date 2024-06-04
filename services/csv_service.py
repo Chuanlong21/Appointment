@@ -25,3 +25,6 @@ def add_to_csv(user: User):
             user.id, user.firstName, user.lastName, user.email, user.phone,
             user.program, user.startTime, user.endTime, user.employee, user.notes
         ])
+
+
+
