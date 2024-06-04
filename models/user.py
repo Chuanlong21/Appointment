@@ -1,7 +1,6 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import Optional
 from utils.encode import generate_user_id
-from models.event import Event
 
 
 # 要实现变量私有化，只公开方法！！！
@@ -10,8 +9,12 @@ class User(BaseModel):
     lastName: str
     email: str = ""
     phone: str = ""
+    program: str = ""
+    startTime: str = ""
+    endTime: str = ""
+    employee: Optional[str] = None
+    notes: Optional[str] = None
     id: str = Field(default_factory=generate_user_id)
-    events: List[Event] = []
 
     class Config:
         arbitrary_types_allowed = True
@@ -19,7 +22,8 @@ class User(BaseModel):
     def to_dict(self):
         return self.dict()
 
+    def update_start_time(self, start_time: str):
+        self.startTime = start_time
 
-
-    def add_event(self, event: Event):
-        self.events.append(event)
+    def update_end_time(self, end_time: str):
+        self.endTime = end_time

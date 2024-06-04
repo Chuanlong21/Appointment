@@ -1,7 +1,7 @@
 # controllers/appointment_controller.py
 from models.user import User
-from models.event import Event
 from datetime import datetime, timedelta
+from services.excel_service import init_excel_file,add_to_excel
 
 
 def add(user_data) -> {}:
@@ -9,23 +9,15 @@ def add(user_data) -> {}:
     end_time = _get_end_time(user_data.get("startTime"), program[1])
 
     new_user = User(**user_data)
-    new_event = Event(
-        uid=new_user.id,
-        program=user_data.get("program"),
-        startTime=user_data.get("startTime"),
-        endTime=end_time,
-        employee=user_data.get("employee"),
-        notes=user_data.get("notes")
-    )
-
-    new_user.add_event(new_event)
-
+    new_user.update_end_time(end_time)
+    # init_excel_file()
+    # add_to_excel(new_user)
     print(new_user)
 
     return {
         "id": new_user.id,
-        "startTime": new_event.startTime,
-        "endTime": new_event.endTime
+        "startTime": new_user.startTime,
+        "endTime": new_user.endTime
     }
 
 
