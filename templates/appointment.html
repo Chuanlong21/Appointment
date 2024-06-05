@@ -26,19 +26,29 @@
             </div>
             <div class="col-md-4">
                 <label for="exampleFormControlInput1" class="form-label">Email</label>
-                <input type="email" class="form-control" id="validationCustom03" name="email" placeholder="name@example.com"
+                <input type="email" class="form-control" id="validationCustom03" name="email"
+                       placeholder="name@example.com"
                        required>
             </div>
             <div class="col-md-3">
                 <label for="exampleFormControlInput1" class="form-label">Phone</label>
-                <input type="text" class="form-control" id="validationCustom04" name="phone" placeholder="000-000-0000" required>
+                <input type="text" class="form-control" id="validationCustom04" name="phone" placeholder="000-000-0000"
+                       required>
             </div>
-            <div class="col-md-3">
-                <label for="validationDefault04" class="form-label">Start Time</label>
-                <select class="form-select" id="validationDefault05" name="startTime" required>
-                    <option selected disabled value="">Choose...</option>
-                </select>
+
+            <div class="col-md-1 form-inline">
+                <label for="exampleFormControlInput1" class="form-label">Start Time</label>
+                <input type="text" class="form-control" id="hoursInput" placeholder="HH" name="hour" max="12" min="1" required>
+                <span>:</span>
+                <input type="text" class="form-control" id="minutesInput" placeholder="MM" name="min" max="59" min="0" required>
+                <span>AM</span>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="amPmSwitch">
+                </div>
+                <span>PM</span>
+
             </div>
+
             <div class="col-md-3">
                 <label for="validationDefault04" class="form-label">Program</label>
                 <select class="form-select" id="validationDefault06" name="program" required>
@@ -69,10 +79,6 @@
         </form>
     </div>
 
-    <div class="legend">
-        <div><span class="today"></span>Today</div>
-        <div><span class="closed"></span>Closed</div>
-    </div>
 
     <div class="calendar-controls">
         <div id='calendar'></div>

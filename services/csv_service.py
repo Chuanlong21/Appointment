@@ -38,9 +38,8 @@ def load_user_data():
     with open(FILE_PATH, mode='r', newline='') as file:
         reader = csv.DictReader(file)
         for row in reader:
-            first_name = row['firstName']
-            last_name = row['lastName']
-            USER_DATA_CACHE[(first_name, last_name)] = row
+            phone = row['phone']
+            USER_DATA_CACHE[phone] = row
 
 
 def save_user_data():
@@ -52,7 +51,7 @@ def save_user_data():
         writer = csv.DictWriter(temp_file, fieldnames=fieldnames)
         writer.writeheader()
         for row in reader:
-            key = (row['firstName'], row['lastName'])
+            key = (row['phone'])
             if key in USER_DATA_CACHE:
                 row.update(USER_DATA_CACHE[key])
             writer.writerow(row)
@@ -60,32 +59,33 @@ def save_user_data():
     print("User data saved:", USER_DATA_CACHE)  # Debug output
 
 
-def set_user_data(first_name, last_name, key, value):
+def set_user_data(phone, key, value):
     if not USER_DATA_CACHE:
         load_user_data()
-    if (first_name, last_name) in USER_DATA_CACHE:
-        USER_DATA_CACHE[(first_name, last_name)][key] = value
+    if phone in USER_DATA_CACHE:
+        USER_DATA_CACHE[phone][key] = value
     else:
-        USER_DATA_CACHE[(first_name, last_name)] = {
-            'firstName': first_name,
-            'lastName': last_name,
+        USER_DATA_CACHE[phone] = {
+            'firstName': '',
+            'lastName': '',
+            'phone': phone,
             'startTime': '',
             'endTime': '',
             'notes': '',
             'program': ''
         }
-        USER_DATA_CACHE[(first_name, last_name)][key] = value
+        USER_DATA_CACHE[phone][key] = value
     save_user_data()
 
 
-def get_user_data(first_name, last_name):
+def get_user_data(phone):
     if not USER_DATA_CACHE:
         load_user_data()
-    return USER_DATA_CACHE.get((first_name, last_name))
+    return USER_DATA_CACHE.get(phone)
 
 
-def get_data_by_name(first_name, last_name, data_name: str):
-    user_data = get_user_data(first_name, last_name)
+def get_data_by_name(phone, data_name: str):
+    user_data = get_user_data(phone)
     if not user_data:
         return None
     data_mapping = {

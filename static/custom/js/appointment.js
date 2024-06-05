@@ -1,17 +1,5 @@
 // Function to populate start time options
 
-function populateStartTimeOptions(selectId, startHour, endHour, intervalMinutes) {
-    var startTimeSelect = document.getElementById(selectId);
-    for (var hour = startHour; hour <= endHour; hour++) {
-        for (var minute = 0; minute < 60; minute += intervalMinutes) {
-            var time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-            var option = document.createElement('option');
-            option.value = time;
-            option.text = time;
-            startTimeSelect.add(option);
-        }
-    }
-}
 
 function submitForm(event) {
     event.preventDefault(); // Prevent the default form submission
@@ -22,9 +10,34 @@ function submitForm(event) {
 
 
     const jsonData = {};
+
+
     formData.forEach((value, key) => {
         jsonData[key] = value;
     });
+    let hour = parseInt(jsonData.hour, 10);
+    const min = jsonData.min;
+
+    if (hour < 1 || hour > 12 || isNaN(hour)) {
+        alert("Hour must be between 1 and 12.");
+        return;
+    }
+
+    if (min < 0 || min > 59 || isNaN(min)) {
+        alert("Minute must be between 0 and 59.");
+        return;
+    }
+
+    const isPm = document.getElementById('amPmSwitch').checked;
+    if (isPm && hour < 12) {
+        hour += 12; // Convert to 24-hour format for PM
+    } else if (!isPm && hour === 12) {
+        hour = 0; // Convert 12 AM to 00
+    }
+
+    jsonData.startTime = `${hour.toString().padStart(2, '0')}:${min}`;
+    delete jsonData.hour;
+    delete jsonData.min;
 
 
     // Send the form data as JSON
@@ -48,7 +61,7 @@ function handleResponse(data) {
 
     const startTime = data.startTime; // assuming format "HH:MM"
     const endTime = data.endTime; // assuming format "HH:MM"
-     const today = new Date();
+    const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0'); // 月份从0开始，所以需要+1
     const day = String(today.getDate()).padStart(2, '0');
@@ -73,4 +86,3 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 //Functions Call
-populateStartTimeOptions('validationDefault05', 8, 22, 60);
