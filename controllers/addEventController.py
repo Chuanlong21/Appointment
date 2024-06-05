@@ -1,22 +1,24 @@
 # controllers/appointment_controller.py
 from models.user import User
 from datetime import datetime, timedelta
-from services.csv_service import init_csv_file, add_to_csv
+from services.csv_service import init_csv_file, add_to_csv, get_data_by_name, set_user_data
 
 
 def add(user_data) -> {}:
     program = _get_program(user_data.get("program"))
     end_time = _get_end_time(user_data.get("startTime"), program[1])
-
     new_user = User(**user_data)
     new_user.update_end_time(end_time)
     new_user.update_program(program[0])
-    init_csv_file()
-    add_to_csv(new_user)
-    print(new_user)
+
+    if get_data_by_name(user_data.get("firstName"), user_data.get("lastName"), "program") is None:
+        init_csv_file()
+        add_to_csv(new_user)
+    else:
+        set_user_data(new_user.firstName, new_user.lastName, "startTime", new_user.startTime)
+        set_user_data(new_user.firstName, new_user.lastName, "endTime", new_user.endTime)
 
     return {
-        "id": new_user.id,
         "startTime": new_user.startTime,
         "endTime": new_user.endTime
     }
