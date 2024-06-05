@@ -1,5 +1,8 @@
 import os
 import csv
+import shutil
+import tempfile
+
 from models.user import User
 
 DATA_DIR = 'data'
@@ -42,12 +45,18 @@ def load_user_data():
 
 def save_user_data():
     global USER_DATA_CACHE
-    with open(FILE_PATH, mode='w', newline='') as file:
-        fieldnames = ['firstName', 'lastName', 'startTime', 'endTime', 'notes', 'program']
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+    temp_file = tempfile.NamedTemporaryFile(mode='w', newline='', delete=False)
+    with open(FILE_PATH, mode='r', newline='') as file, temp_file:
+        reader = csv.DictReader(file)
+        fieldnames = reader.fieldnames
+        writer = csv.DictWriter(temp_file, fieldnames=fieldnames)
         writer.writeheader()
-        for user in USER_DATA_CACHE.values():
-            writer.writerow(user)
+        for row in reader:
+            key = (row['firstName'], row['lastName'])
+            if key in USER_DATA_CACHE:
+                row.update(USER_DATA_CACHE[key])
+            writer.writerow(row)
+    shutil.move(temp_file.name, FILE_PATH)
     print("User data saved:", USER_DATA_CACHE)  # Debug output
 
 
@@ -56,17 +65,17 @@ def set_user_data(first_name, last_name, key, value):
         load_user_data()
     if (first_name, last_name) in USER_DATA_CACHE:
         USER_DATA_CACHE[(first_name, last_name)][key] = value
-    # else:
-    #     USER_DATA_CACHE[(first_name, last_name)] = {
-    #         'firstName': first_name,
-    #         'lastName': last_name,
-    #         'startTime': '',
-    #         'endTime': '',
-    #         'notes': '',
-    #         'program': ''
-    #     }
-    #     USER_DATA_CACHE[(first_name, last_name)][key] = value
-    # save_user_data()
+    else:
+        USER_DATA_CACHE[(first_name, last_name)] = {
+            'firstName': first_name,
+            'lastName': last_name,
+            'startTime': '',
+            'endTime': '',
+            'notes': '',
+            'program': ''
+        }
+        USER_DATA_CACHE[(first_name, last_name)][key] = value
+    save_user_data()
 
 
 def get_user_data(first_name, last_name):
